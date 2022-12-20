@@ -49,10 +49,11 @@ def main():
                   args.identities_load,
                   args.identities_merge,
                   args.enrich,
+                  args.custom,
                   args.panels)
 
 
-def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_load, identities_merge, enrich, panels):
+def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_load, identities_merge, enrich, custom, panels):
     """Execute the Mordred tasks using the configuration file (`cfg_path`).
 
     :param cfg_path: the path of a Mordred configuration file
@@ -80,6 +81,9 @@ def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_lo
     if enrich:
         for backend in backend_sections:
             get_enrich(config, backend, repos_to_check)
+
+    if custom:
+        get_custom_script(config)
 
     if panels:
         get_panels(config)
@@ -224,6 +228,8 @@ def get_params_parser():
                         help="Activate load identities task")
     parser.add_argument("--identities-merge", action='store_true', dest='identities_merge',
                         help="Activate merge identities task")
+    parser.add_argument("--custom-script", action='store_true', dest='custom',
+                        help="Activate merge custom script task")
     parser.add_argument("--panels", action='store_true', dest='panels',
                         help="Activate panels task")
 
@@ -248,7 +254,7 @@ def get_params():
     parser = get_params_parser()
     args = parser.parse_args()
 
-    tasks = [args.raw, args.enrich, args.identities_load, args.identities_merge, args.panels]
+    tasks = [args.raw, args.enrich, args.identities_load, args.identities_merge, args.custom, args.panels]
 
     if not any(tasks):
         print("No tasks enabled")
