@@ -31,6 +31,7 @@ from sirmordred.config import Config
 from sirmordred.task_collection import TaskRawDataCollection
 from sirmordred.task_identities import TaskIdentitiesMerge, TaskIdentitiesLoad
 from sirmordred.task_enrich import TaskEnrich
+from sirmordred.task_custom_script import TaskCustomScript
 from sirmordred.task_panels import TaskPanels, TaskPanelsMenu
 from sirmordred.task_projects import TaskProjects
 
@@ -144,6 +145,18 @@ def get_enrich(config, backend_section, repos_to_check=None):
     except Exception as e:
         logging.error(str(e))
         sys.exit(-1)
+
+def get_custom_script(config):
+    """ execute the custom enrich phase
+
+    :param config: a Mordred config object
+    """
+    logging.info("starting custom script task")
+
+    task = TaskCustomScript(config)
+    task.execute()
+
+    logging.info("Custom script run")
 
 
 def get_panels(config):
