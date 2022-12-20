@@ -12,5 +12,6 @@ jobs:
         with:
           customer: utst
           system: grimoirelab-sirmordred
+          exclude: /report/
         env:
           SIGRID_CI_TOKEN: "${{ secrets.SIGRID_CI_ORG_TOKEN }}"
