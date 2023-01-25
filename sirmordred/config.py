@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2015-2019 Bitergia
+# Copyright (C) 2015-2023 Bitergia
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -487,6 +487,24 @@ class Config():
                     "default": False,
                     "type": bool,
                     "description": "Add gender to the profiles (executes autogender)"
+                },
+                "path": {
+                    "optional": True,
+                    "default": None,
+                    "type": str,
+                    "description": "GraphQL path"
+                },
+                "port": {
+                    "optional": True,
+                    "default": None,
+                    "type": int,
+                    "description": "GraphQL server port"
+                },
+                "ssl": {
+                    "optional": True,
+                    "default": False,
+                    "type": bool,
+                    "description": "GraphQL server use SSL/TSL connection"
                 }
             }
         }

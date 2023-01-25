@@ -19,6 +19,7 @@
 # Authors:
 #     Luis Cañas-Díaz <lcanas@bitergia.com>
 #     Alvaro del Castillo <acs@bitergia.com>
+#     Quan Zhou <quan@bitergia.com>
 #
 
 import json
@@ -45,7 +46,7 @@ from sirmordred.error import DataEnrichmentError
 from sirmordred.task_collection import TaskRawDataCollection
 from sirmordred.task_enrich import TaskEnrich
 from sirmordred.task_custom_script import TaskCustomScript
-from sirmordred.task_identities import TaskIdentitiesExport, TaskIdentitiesLoad, TaskIdentitiesMerge, TaskInitSortingHat
+from sirmordred.task_identities import TaskIdentitiesMerge
 from sirmordred.task_manager import TasksManager
 from sirmordred.task_panels import TaskPanels, TaskPanelsMenu
 from sirmordred.task_projects import TaskProjects
@@ -252,9 +253,10 @@ class SirMordred:
         if self.conf['phases']['panels']:
             tasks_cls = [TaskPanels, TaskPanelsMenu]
             self.execute_tasks(tasks_cls)
-        if self.conf['phases']['identities']:
-            tasks_cls = [TaskInitSortingHat]
-            self.execute_tasks(tasks_cls)
+        # Not needed in SortingHat GraphQL
+        # if self.conf['phases']['identities']:
+        #     tasks_cls = [TaskInitSortingHat]
+        #     self.execute_tasks(tasks_cls)
 
         logger.info("Loading projects")
         tasks_cls = [TaskProjects]
@@ -300,9 +302,8 @@ class SirMordred:
             all_tasks_cls.append(TaskRawDataCollection)
         if self.conf['phases']['identities']:
             # load identities and orgs periodically for updates
-            all_tasks_cls.append(TaskIdentitiesLoad)
+            # all_tasks_cls.append(TaskIdentitiesLoad) Not supported on the new sortinghat graphQL
             all_tasks_cls.append(TaskIdentitiesMerge)
-            all_tasks_cls.append(TaskIdentitiesExport)
             # This is done in enrichement before doing the enrich
             # if self.conf['phases']['collection']:
             #     all_tasks_cls.append(TaskIdentitiesCollection)
