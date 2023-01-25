@@ -45,6 +45,7 @@ from sirmordred.error import DataCollectionError
 from sirmordred.error import DataEnrichmentError
 from sirmordred.task_collection import TaskRawDataCollection
 from sirmordred.task_enrich import TaskEnrich
+from sirmordred.task_custom_script import TaskCustomScript
 from sirmordred.task_identities import TaskIdentitiesMerge
 from sirmordred.task_manager import TasksManager
 from sirmordred.task_panels import TaskPanels, TaskPanelsMenu
@@ -308,6 +309,8 @@ class SirMordred:
             #     all_tasks_cls.append(TaskIdentitiesCollection)
         if self.conf['phases']['enrichment']:
             all_tasks_cls.append(TaskEnrich)
+        if self.conf['phases']['custom']:
+            all_tasks_cls.append(TaskCustomScript)
 
         # this is the main loop, where the execution should spend
         # most of its time

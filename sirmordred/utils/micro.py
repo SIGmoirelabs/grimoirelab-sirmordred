@@ -31,6 +31,7 @@ from sirmordred.config import Config
 from sirmordred.task_collection import TaskRawDataCollection
 from sirmordred.task_identities import TaskIdentitiesMerge
 from sirmordred.task_enrich import TaskEnrich
+from sirmordred.task_custom_script import TaskCustomScript
 from sirmordred.task_panels import TaskPanels, TaskPanelsMenu
 from sirmordred.task_projects import TaskProjects
 
@@ -47,10 +48,11 @@ def main():
                   args.repos_to_check, args.raw,
                   args.identities_merge,
                   args.enrich,
+                  args.custom,
                   args.panels)
 
 
-def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_merge, enrich, panels):
+def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_merge, enrich, custom, panels):
     """Execute the Mordred tasks using the configuration file (`cfg_path`).
 
     :param cfg_path: the path of a Mordred configuration file
@@ -74,6 +76,9 @@ def micro_mordred(cfg_path, backend_sections, repos_to_check, raw, identities_me
     if enrich:
         for backend in backend_sections:
             get_enrich(config, backend, repos_to_check)
+
+    if custom:
+        get_custom_script(config)
 
     if panels:
         get_panels(config)
@@ -128,6 +133,18 @@ def get_enrich(config, backend_section, repos_to_check=None):
     except Exception as e:
         logging.error(str(e))
         sys.exit(-1)
+
+def get_custom_script(config):
+    """ execute the custom enrich phase
+
+    :param config: a Mordred config object
+    """
+    logging.info("starting custom script task")
+
+    task = TaskCustomScript(config)
+    task.execute()
+
+    logging.info("Custom script run")
 
 
 def get_panels(config):
@@ -193,6 +210,8 @@ def get_params_parser():
                         help="Activate enrich task")
     parser.add_argument("--identities-merge", action='store_true', dest='identities_merge',
                         help="Activate merge identities task")
+    parser.add_argument("--custom-script", action='store_true', dest='custom',
+                        help="Activate merge custom script task")
     parser.add_argument("--panels", action='store_true', dest='panels',
                         help="Activate panels task")
 
@@ -217,7 +236,7 @@ def get_params():
     parser = get_params_parser()
     args = parser.parse_args()
 
-    tasks = [args.raw, args.enrich, args.identities_merge, args.panels]
+    tasks = [args.raw, args.enrich, args.identities_merge, args.custom, args.panels]
 
     if not any(tasks):
         print("No tasks enabled")

@@ -203,6 +203,12 @@ class Config():
                     "type": bool,
                     "description": "Do the identities tasks"
                 },
+                "custom": {
+                    "optional": True,
+                    "default": False,
+                    "type": bool,
+                    "description": "run a arbitrary python file of your choosing after enrichment"
+                },
                 "panels": {
                     "optional": False,
                     "default": True,
@@ -353,6 +359,23 @@ class Config():
             }
         }
 
+        params_custom = {
+            "custom_script": {
+                "scriptsource": {
+                    "optional": False,
+                    "default": None,
+                    "type": str,
+                    "description": "location of the script file"
+                },
+                "scriptargs": {
+                    "optional": True,
+                    "default": [],
+                    "type": list,
+                    "destription": "a list of parameters to be given to the script with variable names arg1, arg2 etc"
+                }
+            },
+        }
+
         params_sortinghat = {
             "sortinghat": {
                 "affiliate": {
@@ -486,7 +509,7 @@ class Config():
             }
         }
 
-        tasks_config_params = [params_collection, params_enrichment, params_panels, params_sortinghat]
+        tasks_config_params = [params_collection, params_enrichment, params_panels, params_custom, params_sortinghat]
         for section_params in tasks_config_params:
             params.update(section_params)
 
