@@ -1189,35 +1189,39 @@ six = ">=1.12"
 
 [[package]]
 name = "grimoire-elk"
-version = "0.104.0rc7"
+version = "0.104.0-rc.7"
 description = "GrimoireELK processes and stores software development data to ElasticSearch"
 category = "main"
 optional = false
-python-versions = ">=3.7.1,<4.0.0"
-files = [
-    {file = "grimoire_elk-0.104.0rc7-py3-none-any.whl", hash = "sha256:058ad1be0fcf19b5c3acd0f8180b7c70167e148367821b0ad1fbf1829719e591"},
-    {file = "grimoire_elk-0.104.0rc7.tar.gz", hash = "sha256:bac14083b3457c0be77ba6c514f50024340cc2b0c14f36d23c575f902b1acc64"},
-]
+python-versions = "^3.7.1"
+files = []
+develop = false
 
 [package.dependencies]
 cereslib = ">=0.3"
 elasticsearch = "6.3.1"
 elasticsearch-dsl = "6.3.1"
-geopy = ">=2.0.0,<3.0.0"
+geopy = "^2.0.0"
 graal = ">=0.3"
 grimoirelab-toolkit = ">=0.3"
-numpy = "1.21.0"
-pandas = ">=1.3.5,<2.0.0"
+numpy = "==1.21.0"
+pandas = "^1.3.5"
 perceval = ">=0.19"
 perceval-mozilla = ">=0.3"
 perceval-opnfv = ">=0.2"
 perceval-puppet = ">=0.2"
 perceval-weblate = ">=0.2"
 PyMySQL = ">=0.7.0"
-requests = ">=2.7.0,<3.0.0"
+requests = "^2.7.0"
 sortinghat = ">=0.7.20"
 statsmodels = ">=0.9.0"
-urllib3 = ">=1.26,<2.0"
+urllib3 = "^1.26"
+
+[package.source]
+type = "git"
+url = "https://github.com/SIGmoirelabs/grimoirelab-elk.git"
+reference = "master"
+resolved_reference = "092c41435406cf0d52b765d1a373cc99f7091045"
 
 [[package]]
 name = "grimoirelab-panels"
@@ -2604,4 +2608,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7.1"
-content-hash = "93dada43066206b27b5bc5b64bf74f2b0f515c93a59e9076097bd3cb5b786084"
+content-hash = "2bf56414f0cd196b604c82e0684512fd6ab1aeb067ad3045bfe752439189c09b"
